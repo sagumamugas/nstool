@@ -46,7 +46,7 @@ void nstool::GameCardProcess::setInputFile(const std::shared_ptr<tc::io::IStream
 	mFile = file;
 }
 
-void nstool::GameCardProcess::setKeyCfg(const KeyBag& keycfg)
+void nstool::GameCardProcess::setKeyCfg(const pie::hac::KeyBag& keycfg)
 {
 	mKeyCfg = keycfg;
 }

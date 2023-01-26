@@ -149,7 +149,6 @@
     <ClInclude Include="..\..\..\src\FsProcess.h" />
     <ClInclude Include="..\..\..\src\GameCardProcess.h" />
     <ClInclude Include="..\..\..\src\IniProcess.h" />
-    <ClInclude Include="..\..\..\src\KeyBag.h" />
     <ClInclude Include="..\..\..\src\KipProcess.h" />
     <ClInclude Include="..\..\..\src\MetaProcess.h" />
     <ClInclude Include="..\..\..\src\NacpProcess.h" />
@@ -175,7 +174,6 @@
     <ClCompile Include="..\..\..\src\FsProcess.cpp" />
     <ClCompile Include="..\..\..\src\GameCardProcess.cpp" />
     <ClCompile Include="..\..\..\src\IniProcess.cpp" />
-    <ClCompile Include="..\..\..\src\KeyBag.cpp" />
     <ClCompile Include="..\..\..\src\KipProcess.cpp" />
     <ClCompile Include="..\..\..\src\main.cpp" />
     <ClCompile Include="..\..\..\src\MetaProcess.cpp" />

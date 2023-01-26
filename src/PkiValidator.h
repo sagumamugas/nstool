@@ -1,7 +1,7 @@
 #pragma once
 #include "types.h"
-#include "KeyBag.h"
 
+#include <pietendo/hac/KeyBag.h>
 #include <pietendo/hac/es/SignedData.h>
 #include <pietendo/hac/es/CertificateBody.h>
 
@@ -12,7 +12,7 @@ class PkiValidator
 public:
 	PkiValidator();
 
-	void setKeyCfg(const KeyBag& keycfg);
+	void setKeyCfg(const pie::hac::KeyBag& keycfg);
 	void addCertificates(const std::vector<pie::hac::es::SignedData<pie::hac::es::CertificateBody>>& certs);
 	void addCertificate(const pie::hac::es::SignedData<pie::hac::es::CertificateBody>& cert);
 	void clearCertificates();
@@ -22,7 +22,7 @@ public:
 private:
 	std::string mModuleName;
 
-	KeyBag mKeyCfg;
+	pie::hac::KeyBag mKeyCfg;
 	std::vector<pie::hac::es::SignedData<pie::hac::es::CertificateBody>> mCertificateBank;
 
 	void makeCertIdent(const pie::hac::es::SignedData<pie::hac::es::CertificateBody>& cert, std::string& ident) const;

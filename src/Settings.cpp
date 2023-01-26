@@ -220,7 +220,7 @@ private:
 class SingleParamAesKeyOptionHandler : public tc::cli::OptionParser::IOptionHandler
 {
 public:
-	SingleParamAesKeyOptionHandler(tc::Optional<nstool::KeyBag::aes128_key_t>& param, const std::vector<std::string>& opts) :
+	SingleParamAesKeyOptionHandler(tc::Optional<pie::hac::KeyBag::aes128_key_t>& param, const std::vector<std::string>& opts) :
 		mParam(param),
 		mOptStrings(opts),
 		mOptRegex()
@@ -244,18 +244,18 @@ public:
 		}
 
 		tc::ByteData key_raw = tc::cli::FormatUtil::hexStringToBytes(params[0]);
-		if (key_raw.size() != sizeof(nstool::KeyBag::aes128_key_t))
+		if (key_raw.size() != sizeof(pie::hac::KeyBag::aes128_key_t))
 		{
 			throw tc::ArgumentOutOfRangeException(fmt::format("Option: \"{:s}\", requires an AES128 key as the parameter (must be 32 hex chars).", option));
 		}
 
-		nstool::KeyBag::aes128_key_t key_tmp;
+		pie::hac::KeyBag::aes128_key_t key_tmp;
 		memcpy(key_tmp.data(), key_raw.data(), key_tmp.size());
 
 		mParam = key_tmp;
 	}
 private:
-	tc::Optional<nstool::KeyBag::aes128_key_t>& mParam;
+	tc::Optional<pie::hac::KeyBag::aes128_key_t>& mParam;
 	std::vector<std::string> mOptStrings;
 	std::vector<std::string> mOptRegex;
 };
@@ -554,7 +554,7 @@ nstool::SettingsInitializer::SettingsInitializer(const std::vector<std::string>&
 	}
 
 	// generate keybag
-	opt.keybag = KeyBagInitializer(opt.is_dev, mKeysetPath, mTikPath, mCertPath);
+	opt.keybag = pie::hac::KeyBagInitializer(opt.is_dev, mKeysetPath, mTikPath, mCertPath);
 	opt.keybag.fallback_enc_content_key = mNcaEncryptedContentKey;
 	opt.keybag.fallback_content_key = mNcaContentKey;
 
@@ -930,7 +930,7 @@ void nstool::SettingsInitializer::dump_keys() const
 	}
 }
 
-void nstool::SettingsInitializer::dump_rsa_key(const KeyBag::rsa_key_t& key, const std::string& label, size_t indent, bool expanded_key_data) const
+void nstool::SettingsInitializer::dump_rsa_key(const pie::hac::KeyBag::rsa_key_t& key, const std::string& label, size_t indent, bool expanded_key_data) const
 {
 	std::string indent_str;
 

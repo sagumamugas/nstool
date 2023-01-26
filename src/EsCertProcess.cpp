@@ -28,7 +28,7 @@ void nstool::EsCertProcess::setInputFile(const std::shared_ptr<tc::io::IStream>&
 	mFile = file;
 }
 
-void nstool::EsCertProcess::setKeyCfg(const KeyBag& keycfg)
+void nstool::EsCertProcess::setKeyCfg(const pie::hac::KeyBag& keycfg)
 {
 	mKeyCfg = keycfg;
 }

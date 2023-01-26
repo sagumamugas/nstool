@@ -1,8 +1,9 @@
 #pragma once
 #include "types.h"
-#include "KeyBag.h"
 #include "FsProcess.h"
 
+#include <pietendo/hac/fileformat/NcaFileFormat.h>
+#include <pietendo/hac/KeyBag.h>
 #include <pietendo/hac/ContentArchiveHeader.h>
 #include <pietendo/hac/HierarchicalIntegrityHeader.h>
 #include <pietendo/hac/HierarchicalSha256Header.h>
@@ -18,7 +19,7 @@ public:
 
 	// generic
 	void setInputFile(const std::shared_ptr<tc::io::IStream>& file);
-	void setKeyCfg(const KeyBag& keycfg);
+	void setKeyCfg(const pie::hac::KeyBag& keycfg);
 	void setCliOutputMode(CliOutputMode type);
 	void setVerifyMode(bool verify);
 	void setBaseNCAPath(const tc::Optional<tc::io::Path>& keycfg);
@@ -38,7 +39,7 @@ private:
 
 	// user options
 	std::shared_ptr<tc::io::IStream> mFile;
-	KeyBag mKeyCfg;
+	pie::hac::KeyBag mKeyCfg;
 	CliOutputMode mCliOutputMode;
 	bool mVerify;
 	tc::Optional<tc::io::Path> baseNcaPath;
@@ -48,86 +49,8 @@ private:
 	FsProcess mFsProcess;
 
 	// nca data
-	pie::hac::sContentArchiveHeaderBlock mHdrBlock;
-	pie::hac::detail::sha256_hash_t mHdrHash;
-	pie::hac::ContentArchiveHeader mHdr;
+	std::shared_ptr<pie::hac::NcaFileFormat> mNca;
 
-	// crypto
-	struct sKeys
-	{
-		struct sKeyAreaKey
-		{
-			byte_t index;
-			bool decrypted;
-			KeyBag::aes128_key_t enc;
-			KeyBag::aes128_key_t dec;
-
-			void operator=(const sKeyAreaKey& other)
-			{
-				index = other.index;
-				decrypted = other.decrypted;
-				enc = other.enc;
-				dec = other.dec;
-			}
-
-			bool operator==(const sKeyAreaKey& other) const
-			{
-				return (index == other.index) \
-					&& (decrypted == other.decrypted) \
-					&& (enc == other.enc) \
-					&& (dec == other.dec);
-			}
-
-			bool operator!=(const sKeyAreaKey& other) const
-			{
-				return !(*this == other);
-			}
-		};
-		std::vector<sKeyAreaKey> kak_list;
-
-		tc::Optional<pie::hac::detail::aes128_key_t> aes_ctr;
-	} mContentKey;
-
-	struct SparseInfo
-	{
-
-	};
-
-	// raw partition data
-	struct sPartitionInfo
-	{
-		std::shared_ptr<tc::io::IStream> raw_reader;
-		std::shared_ptr<tc::io::IStream> decrypt_reader;
-		std::shared_ptr<tc::io::IStream> reader;
-		tc::io::VirtualFileSystem::FileSystemSnapshot fs_snapshot;
-		std::shared_ptr<tc::io::IFileSystem> fs_reader;
-		std::string fail_reason;
-		int64_t offset;
-		int64_t size;
-
-		// meta data
-		pie::hac::nca::FormatType format_type;
-		pie::hac::nca::HashType hash_type;
-		pie::hac::nca::EncryptionType enc_type;
-		pie::hac::nca::MetaDataHashType metadata_hash_type;
-
-		// hash meta data
-		pie::hac::HierarchicalIntegrityHeader hierarchicalintegrity_hdr;
-		pie::hac::HierarchicalSha256Header hierarchicalsha256_hdr;
-
-		// crypto metadata
-		pie::hac::detail::aes_iv_t aes_ctr;
-
-		// sparse metadata
-		SparseInfo sparse_info;
-	};
-	
-	std::array<sPartitionInfo, pie::hac::nca::kPartitionNum> mPartitions;
-
-	void importHeader();
-	void generateNcaBodyEncryptionKeys();
-	void generatePartitionConfiguration();
-	void validateNcaSignatures();
 	void displayHeader();
 	void processPartitions();
 

@@ -5,7 +5,7 @@
 #include <tc/Optional.h>
 #include <tc/io.h>
 
-#include "KeyBag.h"
+#include <pietendo/hac/KeyBag.h>
 
 namespace nstool {
 
@@ -42,7 +42,7 @@ struct Settings
 		CliOutputMode cli_output_mode;
 		bool verify;
 		bool is_dev;
-		KeyBag keybag;
+		pie::hac::KeyBag keybag;
 	} opt;
 
 	// code options
@@ -100,7 +100,7 @@ struct Settings
 		opt.cli_output_mode = CliOutputMode();
 		opt.verify = false;
 		opt.is_dev = false;
-		opt.keybag = KeyBag();
+		opt.keybag = pie::hac::KeyBag();
 
 		code.list_api = false;
 		code.list_symbols = false;
@@ -127,7 +127,7 @@ private:
 	void determine_filetype();
 	void usage_text() const;
 	void dump_keys() const;
-	void dump_rsa_key(const KeyBag::rsa_key_t& key, const std::string& label, size_t indent, bool expanded_key_data) const;
+	void dump_rsa_key(const pie::hac::KeyBag::rsa_key_t& key, const std::string& label, size_t indent, bool expanded_key_data) const;
 
 	std::string mModuleLabel;
 
@@ -136,8 +136,8 @@ private:
 	bool mVerbose;
 
 	tc::Optional<tc::io::Path> mKeysetPath;
-	tc::Optional<KeyBag::aes128_key_t> mNcaEncryptedContentKey;
-	tc::Optional<KeyBag::aes128_key_t> mNcaContentKey;
+	tc::Optional<pie::hac::KeyBag::aes128_key_t> mNcaEncryptedContentKey;
+	tc::Optional<pie::hac::KeyBag::aes128_key_t> mNcaContentKey;
 	tc::Optional<tc::io::Path> mTikPath;
 	tc::Optional<tc::io::Path> mCertPath;
 

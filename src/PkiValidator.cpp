@@ -10,7 +10,7 @@ nstool::PkiValidator::PkiValidator() :
 	clearCertificates();
 }
 
-void nstool::PkiValidator::setKeyCfg(const KeyBag& keycfg)
+void nstool::PkiValidator::setKeyCfg(const pie::hac::KeyBag& keycfg)
 {
 	// save a copy of the certificate bank
 	std::vector<pie::hac::es::SignedData<pie::hac::es::CertificateBody>> old_certs = mCertificateBank;

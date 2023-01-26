@@ -27,7 +27,7 @@ void nstool::EsTikProcess::setInputFile(const std::shared_ptr<tc::io::IStream>& 
 	mFile = file;
 }
 
-void nstool::EsTikProcess::setKeyCfg(const KeyBag& keycfg)
+void nstool::EsTikProcess::setKeyCfg(const pie::hac::KeyBag& keycfg)
 {
 	mKeyCfg = keycfg;
 }
